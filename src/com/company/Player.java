@@ -1,35 +1,27 @@
 package com.company;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
-    private Card firstCard;
-    private Card secondCard;
+    private List<Card> cards;
     private int bet = 1000;
 
     public Player() {
-
+        this.cards = new ArrayList<>();
     }
 
-    public Player(Card firstCard, Card secondCard) {
-        this.firstCard = firstCard;
-        this.secondCard = secondCard;
+    public List<Card> getCards() {
+        return cards;
     }
 
-    public Card getFirstCard() {
-        return firstCard;
+    public void setCards(List<Card> list) {
+        for (int i = 0; i < 2; i++) {
+            cards.add(i, list.get(i));
+        }
     }
 
-    public void setFirstCard(Card firstCard) {
-        this.firstCard = firstCard;
-    }
-
-    public Card getSecondCard() {
-        return secondCard;
-    }
-
-    public void setSecondCard(Card secondCard) {
-        this.secondCard = secondCard;
-    }
     public int getBet() {
         return bet;
     }
@@ -47,5 +39,18 @@ public class Player {
         this.bet -= sum;
     }
 
+    public void botBet(Croupier croupier) {
+        int sum = (int) (50 + Math.random()*500);
+        if (sum > bet) {
+            System.out.println("Вы не можете поставить больше чем есть в вашем банке.");
+            return;
+        }
+        croupier.setBank(sum);
+        this.bet -= sum;
+    }
+
+    public void clearCards() {
+        this.cards = new ArrayList<>();
+    }
 
 }

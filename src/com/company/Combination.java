@@ -176,7 +176,7 @@ public class Combination {
     private int containsFourOfKind(Player player, Table table) {
         List<Card> cards = createList(player, table);
         Value card = cards.get(0).getCardValue();
-        for (int i = 1; i < cards.size(); i++) {
+        for (int i = 1; i < cards.size()-2; i++) {
             if (card.equals(cards.get(i).getCardValue()) && card.equals(cards.get(i + 1).getCardValue()) && card.equals(cards.get(i + 2).getCardValue())) {
                 return cards.get(i).getCardValue().ordinal();
             } else
@@ -194,7 +194,11 @@ public class Combination {
             if (cards.get(i).getCardValue().ordinal() == card.ordinal()) {
                 cards.remove(i);
             }
-            card = cards.get(i).getCardValue();
+            try {
+                card = cards.get(i).getCardValue();
+            }catch (IndexOutOfBoundsException indexOutOfBoundsException){
+                card = cards.get(i-1).getCardValue();
+            };
         }
         card = cards.get(0).getCardValue();
         for (int i = 1; i < cards.size(); i++) {
@@ -250,8 +254,8 @@ public class Combination {
 
     public List<Card> createList(Player player, Table table) {
         List<Card> cards = new ArrayList();
-        cards.add(player.getFirstCard());
-        cards.add(player.getSecondCard());
+        cards.add(player.getCards().get(0));
+        cards.add(player.getCards().get(1));
         for (int i = 0; i < table.getCardsOnTheTable().size(); i++) {
             cards.add(table.getCardsOnTheTable().get(i));
         }

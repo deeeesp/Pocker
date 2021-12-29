@@ -1,10 +1,12 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Croupier {
     private Deck deck;
     private int bank;
+    List<Card> list = new ArrayList();
 
     public Croupier() {
         this.deck = new Deck();
@@ -28,10 +30,12 @@ public class Croupier {
         this.bank += bank;
     }
 
-    public ArrayList<Player> giveCardsToPlayers(ArrayList<Player> players) {
+    public List<Player> giveCardsToPlayers(List<Player> players) {
         for (int i = 0; i < players.size(); i++) {
-            players.get(i).setFirstCard(deck.getCard());
-            players.get(i).setSecondCard(deck.getCard());
+            list.add(deck.getCard());
+            list.add(deck.getCard());
+            players.get(i).setCards(list);
+            list.clear();
         }
         return players;
     }
